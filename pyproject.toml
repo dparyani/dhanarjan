@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "dhanarjan"
+version = "0.1.0"
+description = ""
+authors = ["Dhiraj Paryani"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+[tool.poetry.dev-dependencies]
+black = "^25.1.0"
+pylint = "^3.3.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
