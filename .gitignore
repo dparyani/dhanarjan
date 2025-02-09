@@ -192,3 +192,6 @@ client_secrets.json
 dist/
 build/
 *.egg-info/
+
+# Google API tokens
+token.pickle
