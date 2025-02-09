@@ -15,6 +15,7 @@ from dhanarjan.views.company import create_company_performance
 from dhanarjan.views.timeline import create_investment_timeline
 from dhanarjan.views.loans import create_loan_analysis
 from dhanarjan.views.analytics import create_portfolio_analytics
+from dhanarjan.views.visualizations import create_visualizations
 
 
 def main():
@@ -46,13 +47,14 @@ def main():
         return
 
     # Create tabs for different views
-    tab1, tab2, tab3, tab4, tab5 = st.tabs(
+    tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(
         [
             "Portfolio Overview",
             "Portfolio Analytics",
             "Company Performance",
             "Investment Timeline",
             "Loan Analysis",
+            "Advanced Visualizations",
         ]
     )
 
@@ -70,6 +72,9 @@ def main():
 
     with tab5:
         create_loan_analysis(loan_df)
+
+    with tab6:
+        create_visualizations(df)
 
     # Display raw data
     if st.checkbox("Show Raw Data"):
