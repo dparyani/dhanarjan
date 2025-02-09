@@ -1,12 +1,12 @@
-# Auto detect text files and perform LF normalization
+# Set default behavior to automatically normalize line endings
 * text=auto eol=lf
 
-# Force Python files to use LF
+# Explicitly declare text files you want to always be normalized
 *.py text eol=lf
-
-# Force these files to use LF
-*.yml text eol=lf
+*.md text eol=lf
+*.toml text eol=lf
 *.yaml text eol=lf
 *.json text eol=lf
-*.md text eol=lf
-*.toml text eol=lf 
+
+# Force these files to use LF
+*.yml text eol=lf 
