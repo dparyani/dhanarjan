@@ -14,6 +14,7 @@ from dhanarjan.views.portfolio import create_portfolio_overview
 from dhanarjan.views.company import create_company_performance
 from dhanarjan.views.timeline import create_investment_timeline
 from dhanarjan.views.loans import create_loan_analysis
+from dhanarjan.views.analytics import create_portfolio_analytics
 
 
 def main():
@@ -45,9 +46,10 @@ def main():
         return
 
     # Create tabs for different views
-    tab1, tab2, tab3, tab4 = st.tabs(
+    tab1, tab2, tab3, tab4, tab5 = st.tabs(
         [
             "Portfolio Overview",
+            "Portfolio Analytics",
             "Company Performance",
             "Investment Timeline",
             "Loan Analysis",
@@ -58,12 +60,15 @@ def main():
         create_portfolio_overview(df)
 
     with tab2:
-        create_company_performance(df, total_shares_df)
+        create_portfolio_analytics(df, loan_df)
 
     with tab3:
-        create_investment_timeline(df)
+        create_company_performance(df, total_shares_df)
 
     with tab4:
+        create_investment_timeline(df)
+
+    with tab5:
         create_loan_analysis(loan_df)
 
     # Display raw data
