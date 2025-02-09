@@ -60,23 +60,62 @@ def create_portfolio_analytics(df, loan_df):
     """Create portfolio analytics view"""
     st.header("Portfolio Analytics")
 
+    st.info(
+        """
+        This view helps you understand your portfolio's risk and performance metrics:
+        - Capital Structure: Shows how your investments are financed (equity vs debt)
+        - Portfolio Concentration: Reveals diversification across companies
+        - Source Distribution: Shows how investments are split between different funding sources
+        - Historical Performance: Tracks your portfolio's value over time
+    """
+    )
+
     # Calculate metrics
     company_conc, source_conc = calculate_portfolio_concentration(df)
     wacc, equity_weight, debt_weight = calculate_wacc(df, loan_df)
 
     # Display WACC metrics
     st.subheader("Capital Structure")
+    st.info(
+        """
+        WACC (Weighted Average Cost of Capital): The average rate you pay for financing
+        - Lower WACC is better
+        - Equity Weight: Portion financed by your own money
+        - Debt Weight: Portion financed by loans
+        - Debt/Equity: Higher ratio means more leverage (risk)
+    """
+    )
     cols = st.columns(4)
-    cols[0].metric("WACC", f"{wacc:.2%}")
-    cols[1].metric("Equity Weight", f"{equity_weight:.1%}")
-    cols[2].metric("Debt Weight", f"{debt_weight:.1%}")
-    cols[3].metric("Debt/Equity Ratio", f"{debt_weight/equity_weight:.2f}")
+    cols[0].metric(
+        "WACC",
+        f"{wacc:.2%}",
+        help=("Weighted Average Cost of Capital - " "your overall financing cost"),
+    )
+    cols[1].metric(
+        "Equity Weight",
+        f"{equity_weight:.1%}",
+        help="Portion of portfolio financed by your own money",
+    )
+    cols[2].metric(
+        "Debt Weight",
+        f"{debt_weight:.1%}",
+        help="Portion of portfolio financed by loans",
+    )
+    cols[3].metric(
+        "Debt/Equity Ratio",
+        f"{debt_weight/equity_weight:.2f}",
+        help=("Ratio of borrowed money to own money - " "higher means more leverage"),
+    )
 
     # Create two columns for concentration charts
     col1, col2 = st.columns(2)
 
     with col1:
         st.subheader("Company Concentration")
+        st.info(
+            "Shows how your portfolio is distributed across companies."
+            " High concentration in one company means higher risk."
+        )
         fig_company = px.pie(
             values=company_conc.values,
             names=company_conc.index,
@@ -87,6 +126,10 @@ def create_portfolio_analytics(df, loan_df):
 
     with col2:
         st.subheader("Source Distribution")
+        st.info(
+            "Shows how your investments are funded (e.g., Own Money, Time Money, Loans). "
+            "Helps track different investment strategies."
+        )
         fig_source = px.pie(
             values=source_conc.values,
             names=source_conc.index,
@@ -97,6 +140,14 @@ def create_portfolio_analytics(df, loan_df):
 
     # Historical Performance
     st.subheader("Historical Performance")
+    st.info(
+        """
+        Tracks your portfolio's value over time compared to total investment:
+        - Blue line: Total amount invested
+        - Green line: Current portfolio value
+        - Growing gap between lines indicates increasing returns
+    """
+    )
 
     # Create timeline of investments and valuations
     timeline_df = df.copy()
