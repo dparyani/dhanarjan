@@ -1,7 +1,5 @@
 """Data processing utilities."""
 
-import pandas as pd
-
 
 def convert_sek(value):
     """Convert Swedish currency format to numeric"""

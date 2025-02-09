@@ -4,6 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["Dhiraj Paryani"]
 readme = "README.md"
+packages = [{include = "dhanarjan"}]
 
 [tool.poetry.dependencies]
 python = "^3.12"

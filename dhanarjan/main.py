@@ -9,11 +9,11 @@ It sets up the Streamlit interface and loads the necessary data from the Google 
 """
 
 import streamlit as st
-from data.loader import load_data
-from views.portfolio import create_portfolio_overview
-from views.company import create_company_performance
-from views.timeline import create_investment_timeline
-from views.loans import create_loan_analysis
+from dhanarjan.data.loader import load_data
+from dhanarjan.views.portfolio import create_portfolio_overview
+from dhanarjan.views.company import create_company_performance
+from dhanarjan.views.timeline import create_investment_timeline
+from dhanarjan.views.loans import create_loan_analysis
 
 
 def main():

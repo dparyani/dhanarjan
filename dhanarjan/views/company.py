@@ -8,10 +8,11 @@ It includes functions for creating line charts of price history and pie charts o
 
 """
 
-import streamlit as st
-import plotly.express as px
 from datetime import datetime
+
 import pandas as pd
+import plotly.express as px
+import streamlit as st
 
 
 def create_company_performance(df, total_shares_df):
@@ -42,7 +43,7 @@ def create_company_performance(df, total_shares_df):
     # Create a date range from first investment to today
     start_date = company_data["Date"].min()
     end_date = datetime.now()
-    date_range = pd.date_range(start=start_date, end=end_date, freq="M")
+    date_range = pd.date_range(start=start_date, end=end_date, freq="ME")
 
     # Create a DataFrame with the full date range
     timeline_df = pd.DataFrame(date_range, columns=["Date"])
@@ -58,8 +59,8 @@ def create_company_performance(df, total_shares_df):
     # Fill in the current market price for all dates
     timeline_df["Current Market Price"] = current_price
 
-    # Forward fill the Price Paid (to show the last known purchase price)
-    timeline_df["Price Paid"] = timeline_df["Price Paid"].fillna(method="ffill")
+    # Forward fill the Price Paid using ffill()
+    timeline_df["Price Paid"] = timeline_df["Price Paid"].ffill()
 
     # Investment timeline with actual prices
     fig_timeline = px.line(
@@ -80,7 +81,7 @@ def create_company_performance(df, total_shares_df):
         y=company_data["Price Paid"],
         mode="markers",
         name="Investment Points",
-        marker=dict(size=10, symbol="circle"),
+        marker={"size": 10, "symbol": "circle"},
         hovertemplate="Date: %{x}<br>Price: %{y:,.2f} kr<extra></extra>",
     )
 
@@ -89,7 +90,13 @@ def create_company_performance(df, total_shares_df):
         hovermode="x unified",
         xaxis_title="Date",
         yaxis_title="Price (kr)",
-        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+        legend={
+            "orientation": "h",
+            "yanchor": "bottom",
+            "y": 1.02,
+            "xanchor": "right",
+            "x": 1,
+        },
     )
 
     st.plotly_chart(fig_timeline, use_container_width=True)

@@ -69,12 +69,14 @@ def create_loan_analysis(df):
         strategy_table = strategy_df.copy()
         strategy_table["Priority"] = range(1, len(strategy_table) + 1)
         strategy_table["Interest rate"] = strategy_table["Interest rate"].map(
-            "{:.2f}%".format
+            lambda x: f"{x:.2f}%"
         )
-        strategy_table["Amount"] = strategy_table["Amount"].map("{:,.0f} kr".format)
+        strategy_table["Amount"] = strategy_table["Amount"].map(
+            lambda x: f"{x:,.0f} kr"
+        )
         strategy_table["Monthly Interest Cost"] = strategy_table[
             "Monthly Interest Cost"
-        ].map("{:,.0f} kr".format)
+        ].map(lambda x: f"{x:,.0f} kr")
 
         st.write("Repayment Priority (Debt Avalanche Method):")
         st.table(

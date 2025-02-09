@@ -12,19 +12,21 @@ The data is loaded from a Google Sheet that contains the following sheets:
 
 import streamlit as st
 import pandas as pd
-from utils.google_auth import get_google_sheets_service
-from config import SPREADSHEET_ID, SHEET_NAME
+from googleapiclient.discovery import Resource
+
+from dhanarjan.config import SPREADSHEET_ID, SHEET_NAME
+from dhanarjan.utils.google_auth import get_google_sheets_service
 
 
 @st.cache_data
 def load_data():
     """Load investment data from Google Sheets"""
     try:
-        service = get_google_sheets_service()
+        service: Resource = get_google_sheets_service()
 
         # Load the entire sheet
         result = (
-            service.spreadsheets()
+            service.spreadsheets()  # pylint: disable=no-member
             .values()
             .get(spreadsheetId=SPREADSHEET_ID, range=SHEET_NAME)
             .execute()
@@ -119,7 +121,7 @@ def load_data():
 
         return df, total_shares_df, loans_df
 
-    except Exception as e:
+    except (ValueError, IOError, OSError) as e:
         st.error(f"Error loading data: {str(e)}")
         st.write("Exception details:", e)
         return None, None, None
