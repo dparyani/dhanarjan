@@ -32,13 +32,15 @@ def create_company_performance(df, total_shares_df):
     current_value = company_data["Current Value"].sum()
     my_shares = company_data["My Shares"].sum()
     ownership_pct = (my_shares / total_shares) * 100
+    return_pct = ((current_value - total_invested) / total_invested) * 100
 
     # Display metrics
-    cols = st.columns(4)
+    cols = st.columns(5)
     cols[0].metric("Total Invested", f"{total_invested:,.0f} kr")
     cols[1].metric("Current Value", f"{current_value:,.0f} kr")
-    cols[2].metric("My Shares", f"{my_shares:,}")
-    cols[3].metric("Ownership", f"{ownership_pct:.2f}%")
+    cols[2].metric("Return", f"{return_pct:+.1f}%")
+    cols[3].metric("My Shares", f"{my_shares:,}")
+    cols[4].metric("Ownership", f"{ownership_pct:.2f}%")
 
     # Create a date range from first investment to today
     start_date = company_data["Date"].min()
