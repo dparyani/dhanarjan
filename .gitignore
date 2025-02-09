@@ -169,3 +169,26 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Virtual Environment
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Credentials and Secrets
+client_secrets.json
+
+# IDE
+.vscode/
+.idea/
+
+# Environment variables
+.env
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
